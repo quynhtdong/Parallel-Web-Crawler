@@ -130,9 +130,7 @@ public final class WebCrawlerMain {
       return;
     }
 
-    System.out.println("Initiating Config setup");
     CrawlerConfiguration config = new ConfigurationLoader(Path.of(args[0])).load();
-    System.out.println("Configuration successfully built");
     new WebCrawlerMain(config).run();
   }
 }
