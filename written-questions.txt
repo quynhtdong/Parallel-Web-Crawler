@@ -10,29 +10,45 @@ Q1. Run the web crawler using the configurations located at src/main/config/writ
     the ParallelWebCrawler.
 
     Why did the parser take more time when run with ParallelWebCrawler?
-
+    Parser can visit more urls when run with ParallelWebCrawler. This requires more thread creating. Thus, it's time-consuming.
 
 Q2. Your manager ran your crawler on her old personal computer, using the configurations from Q1, and she notices that
     the sequential crawler actually outperforms the parallel crawler. She would like to know why.
 
     (a) Suggest one reason why the sequential web crawler was able to read more web pages than the parallel crawler.
         (Hint: Try setting "parallelism" to 1 in the JSON configs to simulate your manager's computer.)
+        Since each thread needs to have memory allocated for its call stack. The old personal computer is not qualified
+        to use multiple threads. Parallel crawler makes her computer slower.
 
     (b) Suggest one scenario in which the parallel web crawler will almost certainly perform better than the sequential
         crawler. Why will it perform better?
-
+        Parallel web crawler  will certainly perform better than the sequential crawler on multi-processor computer. It can handle
+        more threads and make use of parallelism.
 
 Q3. Analyze your method profiler through the lens of Aspect Oriented Programming, by answering the following questions:
 
     (a) What cross-cutting concern is being addressed by the com.udacity.webcrawler.profiler.Profiler class?
-
+    Performance profiling is being addressed.
     (b) What are the join points of the Profiler in the web crawler program?
-
+    Methods that are annotated with Profiler.
 
 Q4. Identify three (3) different design patterns used in this project, and explain which interfaces, classes, and/or
     libraries use or implement those design patterns.
 
     For each pattern, name one thing about the pattern that you LIKED, and one thing you DISLIKED. If you did not like
     anything, you can name two things you disliked.
+
+    Singleton Pattern: Methods in module are injected with Singleton. One module class only have one instance
+    and methods are private. This prevents client to call the constructor directly to create other
+    instance.
+
+    Builder Pattern: It helps provide clear API for the CrawlerConfiguration class. Since this class has many
+    constructor parameters, this builder pattern helps to prevent any fault happened at load() stage.
+
+    Dependency Injection: All parts of the code depend on interfaces. For example, ProfilerImpl was implemented
+    with Profiler Interface. The program is injected with Web Crawler and Profiler. This improves code testability.
+
+    I like Builder Pattern, it helps provide a clearer and cleaner API. But I don't really like Singleton Pattern,
+    since it limits only one instance to be created.
 
 
